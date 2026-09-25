@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     //анимация контента
-    const animItems = document.querySelectorAll('.animate');
+    /*const animItems = document.querySelectorAll('.animate');
     if (animItems.length > 0) {
         function onEntry(param) {
             animItems.forEach(item => {
@@ -60,16 +60,31 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             })
         }
+    }*/
+
+    function onEntry(entry) {
+        entry.forEach(change => {
+            if (change.isIntersecting) {
+                change.target.classList.add('show');
+            } else change.target.classList.remove('show');
+        });
+    }
+    let options = {threshold: [0.5]};
+    let observer = new IntersectionObserver(onEntry, options);
+    let elements = document.querySelectorAll('.animate');
+
+    for (let elm of elements) {
+        observer.observe(elm);
     }
 
-    onEntry();
+    //onEntry();
     navInit();
     window.addEventListener('scroll', () => {
         navInit(); //запускаем функцию при скролле станицы
-        onEntry();
+        //onEntry();
 
     })
     window.addEventListener('resize', () => {
-        navInit() ////запускаем функцию при ресайзе станицы
+        navInit() //запускаем функцию при ресайзе станицы
     })
 })
