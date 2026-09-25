@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const navInit = () => {
         //изменение цвета фона меню
         const navbarCollapsible = document.body.querySelector('#mainNav');
-
         if (window.scrollY === 0) {
             navbarCollapsible.classList.remove('navbar-shrink');
         } else {
@@ -13,11 +12,16 @@ document.addEventListener('DOMContentLoaded', function() {
         const sections = document.querySelectorAll('section'); //ищем все секции
 
         sections.forEach(section => { //для каждой секции
-            if (window.scrollY >= (section.offsetTop - 100)) { //проверяем, если стр прокручена больше, чем расстояние секции от начала стр
-                console.log(window.scrollY + " >= " + section.offsetTop + " " + section.id); //отладка, удалить
-                links.forEach(link => { //для каждой ссылки
-                    link.classList.remove('active') //удаляем активный класс
-                    if (link.href.split('#').pop() === section.id) { //проверяем, если href ссылки без # === id екции
+            //проверяем, если стр прокручена больше, чем расстояние секции от начала стр
+            if (window.scrollY >= (section.offsetTop - 100)) { 
+                //отладка
+                console.log(window.scrollY + " >= " + section.offsetTop + " " + section.id);
+                //для каждой ссылки
+                links.forEach(link => { 
+                    //удаляем активный класс
+                    link.classList.remove('active') 
+                    //проверяем, если href ссылки без # === id екции
+                    if (link.href.split('#').pop() === section.id) { 
                         link.classList.add('active') //добавляем ссылке активный класс
                     }
                 })
@@ -25,11 +29,44 @@ document.addEventListener('DOMContentLoaded', function() {
         })
     }
 
+    function offset(el) {
+        const rect = el.getBoundingClientRect();
+            scrollLeft = window.scrollX || document.documentElement.scrollLeft;
+            scrollTop = window.scrollY || document.documentElement.scrollTop;
+        return {top: rect.top + scrollTop, left: rect.left + scrollLeft};
+    }
 
 
+    //анимация контента
+    const animItems = document.querySelectorAll('.animate');
+    if (animItems.length > 0) {
+        function onEntry(param) {
+            animItems.forEach(item => {
+                const itemHeight = item.offsetHeight; //высота анимруемого объекта
+                const itemOffset = offset(item).top; //позиция объекта от верхнего края
+                const startPos = 2; //параметр регулирования старта анимации
+                //не window.innerWidth/innerHeight
+                const animPoint = document.documentElement.clientHeight - itemHeight / startPos;
+
+                if (itemHeight > document.documentElement.clientHeight) {
+                    const animPoint = document.documentElement.clientHeight - document.documentElement.clientHeight / startPos;
+                }
+                if (scrollY  > (itemOffset - animPoint) && scrollY < (itemOffset + itemHeight)) {
+                    item.classList.add('show');
+                } else {
+                    if (!item.classList.contains('no-hide')){
+                        item.classList.remove('show');
+                    }
+                }
+            })
+        }
+    }
+
+    onEntry();
     navInit();
     window.addEventListener('scroll', () => {
         navInit(); //запускаем функцию при скролле станицы
+        onEntry();
 
     })
     window.addEventListener('resize', () => {

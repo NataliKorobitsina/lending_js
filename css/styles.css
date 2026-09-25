@@ -11698,3 +11698,27 @@ body {
 .footer {
   padding: 5rem 0;
 }
+
+.text-animation {
+  /* скроем элемент в начальном состоянии */
+  opacity: 0;
+  transform: translateY(100%);
+}
+
+.text-animation.show {
+  opacity: 1;
+  transition: all 1s;
+  transform: translateY(0%);
+}
+
+.image-animation {
+  /* скроем элемент в начальном состоянии */
+  opacity: 0;
+  transform: translateX(-100%);
+}
+
+.image-animation.show {
+  opacity: 1;
+  transition: all 2s;
+  transform: translateX(0%);
+}
