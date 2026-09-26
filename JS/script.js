@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     //анимация контента
-    /*const animItems = document.querySelectorAll('.animate');
+    const animItems = document.querySelectorAll('.animate');
     if (animItems.length > 0) {
         function onEntry(param) {
             animItems.forEach(item => {
@@ -60,9 +60,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             })
         }
-    }*/
+    }
 
-    function onEntry(entry) {
+    /*function onEntry(entry) {
         entry.forEach(change => {
             if (change.isIntersecting) {
                 change.target.classList.add('show');
@@ -75,13 +75,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     for (let elm of elements) {
         observer.observe(elm);
-    }
+    }*/
 
-    //onEntry();
+    onEntry();
     navInit();
     window.addEventListener('scroll', () => {
         navInit(); //запускаем функцию при скролле станицы
-        //onEntry();
+        onEntry();
 
     })
     window.addEventListener('resize', () => {
