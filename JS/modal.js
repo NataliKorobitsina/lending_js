@@ -4,7 +4,7 @@ const blockPadding = document.querySelectorAll('.lock-padding');
 let unblock = true; //блокируем двойные нажатия
 const timeout = 800; //таймаут, равный времени анимации
 
-if(modalLinks.length > 0) {
+if (modalLinks.length > 0) {
     modalLinks.forEach(link => {
         link.addEventListener('click', function (e) {
             const modalName = link.getAttribute('href').replace('#', '');
@@ -18,7 +18,7 @@ if(modalLinks.length > 0) {
 const modalCloseElem = document.querySelectorAll('.close-modal');
 if (modalCloseElem.length > 0) {
     modalCloseElem.forEach(el => {
-        el.addEventListener('click', function(e) {
+        el.addEventListener('click', function (e) {
             modalCloseElem(el.closest('.popup')); //ближайший родитель закрывающего элемента
             e.preventDefault(); //запрет на перезагрузку траницы при клике на ссылку
         })
@@ -26,7 +26,7 @@ if (modalCloseElem.length > 0) {
 }
 
 function modalOpen(currentModal) {
-    if(currentModal && unblock) {
+    if (currentModal && unblock) {
         const modalActive = document.querySelector('.popup.open');
         if (modalActive) {
             modalClose(modalActive, false);
@@ -45,7 +45,7 @@ function modalOpen(currentModal) {
 function modalClose(modalActive, doUnblock = true) {
     if (unblock) {
         modalActive.classList.remove('open');
-        if(doUnblock) {
+        if (doUnblock) {
             bodyUnBlock();
         }
     }
@@ -54,23 +54,23 @@ function modalClose(modalActive, doUnblock = true) {
 function bodyBlock() {
     const blockPaddingValue = window.innerWidth - document.querySelector('#wrapper').offsetWidth + 'px';
     console.log('blockPaddingValue = ' + blockPaddingValue);
-    if(blockPadding.length > 0) {
+    if (blockPadding.length > 0) {
         blockPadding.forEach(el => {
-            el.computedStyleMap.paddingRight = blockPaddingValue;
+            el.style.paddingRight = blockPaddingValue;
         })
     }
     body.classList.add('blocked');
-    //document.querySelector('.navbar').classList.add('blocked');
+    document.querySelector('.navbar').classList.add('blocked');
 
     unblock = false;
-    setTimeout(function() {
+    setTimeout(function () {
         unblock = true;
     }, timeout);
 }
 
 function bodyUnBlock() {
-    setTimeout(function() {
-        if(blockPadding.length > 0) {
+    setTimeout(function () {
+        if (blockPadding.length > 0) {
             blockPadding.forEach(el => {
                 el.style.paddingRight = '0px';
             })
